@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EQL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_HYPR,           KC_MEH,  KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN),KC_QUOT,
         KC_LSFT, LALT_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RGUI_T(KC_SLSH), KC_RSFT,
     LT(SYMB,KC_GRV),WEBUSB_PAIR,A(KC_LSFT),KC_LEFT, KC_RGHT,  KC_BSPC,                  KC_ESC,    KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, MO(SYMB),
-                                      LSFT_T(KC_TAB),KC_LGUI,LCTL_T(KC_BSPC),    RALT_T(KC_ENT), KC_RCTL,RSFT_T(KC_SPC)
+                                  LSFT_T(KC_TAB),KC_LGUI,LCTL_T(KC_ESC),         RALT_T(KC_ENT),LCTL_T(KC_BSPC),RSFT_T(KC_SPC)
     ),
 
     [SYMB] = LAYOUT_moonlander(
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,  _______,           _______, KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
         _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                             KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
         EE_CLR,  _______, _______, _______, _______,          RGB_VAI,           RGB_TOG,          _______, KC_DOT,  KC_0,    KC_EQL,  _______,
-                                            RGB_HUD, RGB_VAD, RGB_HUI, TOGGLE_LAYER_COLOR,_______, _______
+                                            RGB_HUD, RGB_VAD, RGB_HUI, TOGGLE_LAYER_COLOR,RGB_MOD,RGB_RMOD
     ),
 
     [MDIA] = LAYOUT_moonlander(
