@@ -23,9 +23,15 @@
 
 enum layers {
     BASE,  // default layer
+    THMOD, // thumb modifiers
+    THKEY, // thumb keys
     SYMB,  // symbols
     MDIA,  // media keys
 };
+
+//const rgblight_segment_t PROGMEM rgb_layer_thmod[] = RGBLIGHT_LAYER_SEGMENTS(
+//
+//);
 
 enum custom_keycodes {
     VRSN = SAFE_RANGE,
@@ -38,8 +44,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BSPC, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    TG(SYMB),         TG(SYMB), KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
         KC_EQL,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_HYPR,           KC_MEH,  KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN),KC_QUOT,
         CW_TOGG, LALT_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RGUI_T(KC_SLSH), KC_BSLS,
-    LT(SYMB,KC_GRV),WEBUSB_PAIR,A(KC_LSFT),KC_LEFT,LT(SYMB,KC_RGHT),KC_BSPC, KC_ESC,LT(SYMB,KC_UP),KC_DOWN, KC_LBRC, KC_RBRC, MO(SYMB),
+        _______,WEBUSB_PAIR,A(KC_LSFT),KC_LEFT,LT(SYMB,KC_RGHT),  TG(THMOD), TG(THKEY),LT(SYMB,KC_UP),KC_DOWN, KC_LBRC, KC_RBRC, MO(SYMB),
                                       LSFT_T(KC_TAB),KC_LGUI,LCTL_T(KC_ESC), RALT_T(KC_ENT),LCTL_T(KC_BSPC),RSFT_T(KC_SPC)
+    ),
+
+    [THKEY] = LAYOUT_moonlander(
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,          _______,           _______,          _______, _______, _______, _______, _______,
+                                            KC_TAB,  _______, KC_ESC,            KC_ENT,  KC_BSPC, KC_SPC
+    ),
+
+    [THMOD] = LAYOUT_moonlander(
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,          _______,           _______,          _______, _______, _______, _______, _______,
+                                            KC_LSFT, KC_LGUI, KC_LCTL,           KC_RALT, KC_LCTL, KC_RSFT
     ),
 
     [SYMB] = LAYOUT_moonlander(
@@ -53,13 +77,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MDIA] = LAYOUT_moonlander(
         LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, QK_BOOT,
-        _______, _______, _______, KC_MS_U, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,           _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______, KC_MPLY,
+        _______, _______, _______, KC_MS_U, _______, KC_PGUP, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN, _______,           _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______, KC_MPLY,
         _______, _______, _______, _______, _______, _______,                             _______, _______, KC_MPRV, KC_MNXT, _______, _______,
         _______, _______, _______, KC_BTN1, KC_BTN2,          RGB_VAI,           RGB_TOG,          KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
                                             RGB_HUD, RGB_VAD, RGB_HUI, TOGGLE_LAYER_COLOR,RGB_MOD,RGB_RMOD
     ),
 };
+
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSFT_T(KC_TAB):
+        case RSFT_T(KC_SPC):
+            return 0;
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
